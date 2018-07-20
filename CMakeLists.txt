@@ -1,12 +1,34 @@
-cmake_minimum_required (VERSION 3.0)
-project(nibbler)
+# Specify the minimum version for CMake
 
+cmake_minimum_required(VERSION 3.0)
+
+# Project's name
+
+project(nibbler)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -std=c++11 -fPIC")
+set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
+set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
+set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 
 include(ExternalProject)
 
-if(UNIX)
+if(MINGW)
+	#LINUX BUILD
+	set(EXTERNAL_INSTALL_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/lib/win)
+	SET(CMAKE_INSTALL_PREFIX ${EXTERNAL_INSTALL_LOCATION})
 
+	ExternalProject_Add(
+		#EXTERNAL PROJECT NAME
+		sfml 
+		#OPTIONS SPECIFIED
+		PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/lib/win
+		URL https://www.sfml-dev.org/files/SFML-2.5.0-windows-gcc-7.3.0-mingw-32-bit.zip
+	)
+	set(SFML_DIR "${EXTERNAL_INSTALL_LOCATION}/src/sfml/lib/cmake/SFML")
+
+else()
+	#UNIX BUILD
 	set(EXTERNAL_INSTALL_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/lib/mac)
 	SET(CMAKE_INSTALL_PREFIX ${EXTERNAL_INSTALL_LOCATION})
 
@@ -21,4 +43,8 @@ if(UNIX)
 		-DSFML_DEPENDENCIES_INSTALL_PREFIX=${EXTERNAL_INSTALL_LOCATION}/Frameworks 
 		-DSFML_MISC_INSTALL_PREFIX=${EXTERNAL_INSTALL_LOCATION}
 	)
-endif(UNIX)
+endif()
+
+
+add_executable(nibbler "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
+
