@@ -1,5 +1,7 @@
 # Specify the minimum version for CMake
 
+
+
 cmake_minimum_required(VERSION 3.0)
 
 # Project's name
@@ -43,8 +45,12 @@ else()
 		-DSFML_DEPENDENCIES_INSTALL_PREFIX=${EXTERNAL_INSTALL_LOCATION}/Frameworks 
 		-DSFML_MISC_INSTALL_PREFIX=${EXTERNAL_INSTALL_LOCATION}
 	)
+	set(SFML_DIR "${EXTERNAL_INSTALL_LOCATION}/lib/cmake/SFML")
 endif()
 
 
-add_executable(nibbler "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 
+
+find_package(SFML 2.5 COMPONENTS graphics audio REQUIRED)
+add_executable(nibbler "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
+target_link_libraries(nibbler sfml-graphics sfml-audio)
