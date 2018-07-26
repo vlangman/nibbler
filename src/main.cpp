@@ -1,24 +1,49 @@
-#include <SFML/Graphics.hpp>
 
-int main()
+#include <iostream>
+#include "snake.hpp"
+
+
+int main(int argc, char **argv)
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
 
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+	if (argc < 3){
+		std::cout << "Invalid arguments specified: Height & Width required" << std::endl;
+	}
+	else {
 
-        window.clear();
-        window.draw(shape);
-        window.display();
-    }
+		Snake snake;
 
-    return 0;
+		snake.runLoop();
+
+
+		int Height = std::atoi(argv[1]);
+		int Width = std::atoi(argv[1]);
+		std::cout << Height << " :: " << Width << std::endl;
+
+		//getting the default bpp (bits per pixel) for the desktop
+		// sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+		// sf::RenderWindow window(
+		// 	sf::VideoMode(Height, Width, 32),
+		// 	"WHAT THE FUCK IS GOIN ON??"
+		// );
+
+		// sf::CircleShape shape(100.f);
+		// shape.setFillColor(sf::Color::Yellow);
+
+		// while (window.isOpen())
+		// {
+		// 	sf::Event event;
+		// 	while (window.pollEvent(event))
+		// 	{
+		// 		if (event.type == sf::Event::Closed)
+		// 			window.close();
+		// 	}
+
+		// 	window.clear();
+		// 	window.draw(shape);
+		// 	window.display();
+		// }
+	}
+
+	return 0;
 }
