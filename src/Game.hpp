@@ -8,15 +8,21 @@
 
 class LibInterface;
 
+enum E_LIBRARY_CHOICE
+{
+	SFML, 
+	SDL,
+	NCURSES
+};
 
 class Game {
 
 private:
 	int window_x;
 	int window_y;
+
 	LibInterface *_library;
-
-
+	E_LIBRARY_CHOICE curLib;
 public:
 	
 	Game(void);
@@ -39,7 +45,7 @@ public:
 	*/
 
 	int 	runLoop(void);
-	void	useLibrary(void);
+	void	useLibrary(E_LIBRARY_CHOICE libChoice);
 	void	closeGame();
 
 };

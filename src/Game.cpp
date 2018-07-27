@@ -7,6 +7,7 @@
 	- CANONICAL CONSTRUCTORS START
 */
 	Game::Game(void){
+		curLib = E_LIBRARY_CHOICE::SFML;
 		return;
 	};
 
@@ -85,7 +86,18 @@ void	Game::closeGame()
 
 }
 
-void	Game::useLibrary(void)
+void	Game::useLibrary(E_LIBRARY_CHOICE libChoice)
 {
-	
+	// Do nothing if we already have the lib loaded
+	if (libChoice != curLib)
+	{
+		switch (libChoice)
+		{
+			case E_LIBRARY_CHOICE::SFML:
+				
+				break;
+			case E_LIBRARY_CHOICE::SDL : break;
+			case E_LIBRARY_CHOICE::NCURSES : break;
+		}
+	}
 }
