@@ -1,4 +1,4 @@
-#include "snake.hpp"
+#include "Game.hpp"
 #include <ctime>
 #include <unistd.h>
 #include <dlfcn.h>
@@ -6,23 +6,23 @@
 /*
 	- CANONICAL CONSTRUCTORS START
 */
-	Snake::Snake(void){
+	Game::Game(void){
 		return;
 	};
 
-	Snake::~Snake(void){
+	Game::~Game(void){
 		return;
 	};
 
-	Snake & Snake::operator=(const Snake & _snake){
-		this->window_x = _snake.getWindowX();
-		this->window_y = _snake.getWindowY();
+	Game & Game::operator=(const Game & _game){
+		this->window_x = _game.getWindowX();
+		this->window_y = _game.getWindowY();
 		return *this;
 	};
 
-	Snake::Snake(const Snake & _snake){
-		this->window_x = _snake.getWindowX();
-		this->window_y = _snake.getWindowY();
+	Game::Game(const Game & _game){
+		this->window_x = _game.getWindowX();
+		this->window_y = _game.getWindowY();
 	};
 /*
 	- CANONICAL CONSTRUCTORS END
@@ -32,11 +32,11 @@
 /*
 	GETTERS START
 */
-	int Snake::getWindowX(void) const{
+	int Game::getWindowX(void) const{
 		return this->window_x;
 	};
 
-	int Snake::getWindowY(void) const{
+	int Game::getWindowY(void) const{
 		return this->window_y;
 	};
 
@@ -48,11 +48,12 @@
 /*
 	MAIN GAME LOOP START
 */
-	int 	Snake::runLoop(void){
+	int 	Game::runLoop(void){
 
 		void *handle;
-		void (*drawGame)(void);
 		char *error;
+
+		LibInterface *(*getSfml)(void);
 		
 		handle = dlopen("libsfmlLib.dylib",  RTLD_LOCAL | RTLD_LAZY);
 
@@ -63,17 +64,28 @@
 		}
 		// *(void **) (&cosine)
 		
-		*(void **)(&drawGame) = dlsym(handle,"drawGame");
+		*(void **)(&getSfml) = dlsym(handle,"createSfmlLib");
 		
 		if ((error = dlerror()) != NULL) {
 			std::cout << error << std::endl;
 			exit(1);
 		}
-		std::cout << "calling drawGame" << std::endl;
-		drawGame();
+		std::cout << "calling getSfml" << std::endl;
+		LibInterface *sfml =  getSfml();
+		sfml->drawGame();
 		dlclose(handle);
 		return 0;
 	}
 /*
 	MAIN GAME LOOP END
 */
+
+void	Game::closeGame()
+{
+
+}
+
+void	Game::useLibrary(void)
+{
+	
+}

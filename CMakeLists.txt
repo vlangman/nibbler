@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 3.0.2)
 project(nibbler)
 
 include(ExternalProject)
-add_executable(nibbler src/main.cpp src/snake.cpp)
+add_executable(nibbler src/main.cpp src/Game.cpp)
 
 if(UNIX AND APPLE)
 	set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -std=c++11 -fPIC")
@@ -26,8 +26,11 @@ if(UNIX AND APPLE)
 	add_dependencies(nibbler sfml)
 
 	add_library(sfmlLib SHARED
-    	${CMAKE_CURRENT_SOURCE_DIR}/src/sfmlLib.cpp
-    	${CMAKE_CURRENT_SOURCE_DIR}/src/snake.cpp
+		${EXTERNAL_INSTALL_LOCATION}/lib/libsfml-graphics.dylib
+		${EXTERNAL_INSTALL_LOCATION}/lib/libsfml-system.dylib
+		${EXTERNAL_INSTALL_LOCATION}/lib/libsfml-window.dylib
+		${CMAKE_CURRENT_SOURCE_DIR}/src/sfmlLib.cpp
+		#${CMAKE_CURRENT_SOURCE_DIR}/src/snake.cpp
 	)
 
 	target_link_libraries(

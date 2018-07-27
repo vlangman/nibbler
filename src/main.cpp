@@ -1,6 +1,6 @@
 
 #include <iostream>
-#include "snake.hpp"
+#include "Game.hpp"
 
 
 int main(int argc, char **argv)
@@ -11,13 +11,13 @@ int main(int argc, char **argv)
 	}
 	else {
 
-		Snake snake;
+		Game game;
 
 		int Height = std::atoi(argv[1]);
 		int Width = std::atoi(argv[1]);
 		std::cout << Height << " :: " << Width << std::endl;
 
-		snake.runLoop();
+		game.runLoop();
 
 		
 	}

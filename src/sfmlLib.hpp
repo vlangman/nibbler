@@ -1,9 +1,9 @@
 #pragma once
-#include "graphicsInterface.hpp"
+#include "LibInterface.hpp"
 #include "../lib/include/SFML/Graphics.hpp"
 
 
-class sfmlLib : public graphicsInterface{
+class sfmlLib : public LibInterface{
 	private:
 		int 		window_x;
 		int 		window_y;
@@ -37,30 +37,7 @@ class sfmlLib : public graphicsInterface{
 
 };
 
-extern "C" void drawGame(void){
-	std::cout << "DRAW DA SNEK HERE" << std::endl;
-
-	//getting the default bpp (bits per pixel) for the desktop
-		// sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-		sf::RenderWindow window(
-			sf::VideoMode(500, 500, 32),
-			"WHAT THE FUCK IS GOIN ON??"
-		);
-
-		sf::CircleShape shape(100.f);
-		shape.setFillColor(sf::Color::Yellow);
-
-		while (window.isOpen())
-		{
-			sf::Event event;
-			while (window.pollEvent(event))
-			{
-				if (event.type == sf::Event::Closed)
-					window.close();
-			}
-
-			window.clear();
-			window.draw(shape);
-			window.display();
-		}
-};
+extern "C" {
+	sfmlLib *createSfmlLib();
+	void deleteSfmlLib(sfmlLib *lib);
+}

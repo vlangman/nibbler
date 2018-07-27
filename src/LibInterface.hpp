@@ -1,11 +1,10 @@
 #pragma once
 #include <iostream>
-#include "snake.hpp"
+#include "Game.hpp"
 
-class Snake;
-
-class graphicsInterface {
+class LibInterface {
 
 public:
 	virtual void drawGame() = 0;
+	virtual ~LibInterface(){};
 };
