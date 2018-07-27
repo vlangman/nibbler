@@ -41,8 +41,7 @@
 	VIRTUAL INHERITED FUCNTIONS
 */
 
-	void sfmlLib::drawGame(const Snake & _snake){
-		std::cout << _snake.getWindowX() << std::endl;
+	void sfmlLib::drawGame(void){
 		std::cout << "DRAW DA SNEK HERE" << std::endl;
 	};
 

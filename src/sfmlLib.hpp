@@ -27,7 +27,7 @@ class sfmlLib : public graphicsInterface{
 	/* 
 		VIRTUAL INHERITED ABSTRACT FUCNTIONS
 	*/
-		void drawGame(const Snake & _snake);
+		void drawGame(void);
 
 	/* 
 		GETTER AND SETTERS
@@ -37,6 +37,30 @@ class sfmlLib : public graphicsInterface{
 
 };
 
-extern "C" {
-    extern void drawGame(const Snake & _snake);
-}
+extern "C" void drawGame(void){
+	std::cout << "DRAW DA SNEK HERE" << std::endl;
+
+	//getting the default bpp (bits per pixel) for the desktop
+		// sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+		sf::RenderWindow window(
+			sf::VideoMode(500, 500, 32),
+			"WHAT THE FUCK IS GOIN ON??"
+		);
+
+		sf::CircleShape shape(100.f);
+		shape.setFillColor(sf::Color::Yellow);
+
+		while (window.isOpen())
+		{
+			sf::Event event;
+			while (window.pollEvent(event))
+			{
+				if (event.type == sf::Event::Closed)
+					window.close();
+			}
+
+			window.clear();
+			window.draw(shape);
+			window.display();
+		}
+};

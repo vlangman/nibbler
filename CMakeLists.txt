@@ -20,23 +20,26 @@ if(UNIX AND APPLE)
 		-DSFML_MISC_INSTALL_PREFIX=${EXTERNAL_INSTALL_LOCATION}
 	)
 
-	include_directories(${EXTERNAL_INSTALL_LOCATION})
+	ExternalProject_Get_Property(sfml SOURCE_DIR)
 	include_directories(${EXTERNAL_INSTALL_LOCATION}/include)
 
 	add_dependencies(nibbler sfml)
-
-
-	target_link_libraries(
-		nibbler 
-		${EXTERNAL_INSTALL_LOCATION}/lib/libsfml-graphics.dylib
-		${EXTERNAL_INSTALL_LOCATION}/lib/libsfml-system.dylib
-		${EXTERNAL_INSTALL_LOCATION}/lib/libsfml-window.dylib
-	)
 
 	add_library(sfmlLib SHARED
     	${CMAKE_CURRENT_SOURCE_DIR}/src/sfmlLib.cpp
     	${CMAKE_CURRENT_SOURCE_DIR}/src/snake.cpp
 	)
+
+	target_link_libraries(
+		sfmlLib 
+		${EXTERNAL_INSTALL_LOCATION}/lib/libsfml-graphics.dylib
+		${EXTERNAL_INSTALL_LOCATION}/lib/libsfml-system.dylib
+		${EXTERNAL_INSTALL_LOCATION}/lib/libsfml-window.dylib
+	)
+
+	target_link_libraries(nibbler sfmlLib)
+	
+
 
 else ()
 #LINUX

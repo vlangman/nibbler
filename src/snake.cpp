@@ -50,24 +50,29 @@
 */
 	int 	Snake::runLoop(void){
 
-		void *handle = dlopen("libsfmlLib.dylib",  RTLD_LOCAL | RTLD_LAZY);
-
-		graphicsInterface *(*drawGame)();
-		drawGame = (graphicsInterface *(*)(void))dlsym(handle, "drawGame");
+		void *handle;
+		void (*drawGame)(void);
+		char *error;
 		
-		// float delta_time = 0.0;
-		// float current_frame = 0.0;
-		// float last_frame = time(0);
+		handle = dlopen("libsfmlLib.dylib",  RTLD_LOCAL | RTLD_LAZY);
 
-
-		while (1)
+		if (!handle) 
 		{
-			usleep(600);
-			std::cout << "right here tjom" << std::endl;
-			drawGame();
+			std::cout << dlerror() << std::endl;
+			exit(1);
 		}
-		return 0;
+		// *(void **) (&cosine)
 		
+		*(void **)(&drawGame) = dlsym(handle,"drawGame");
+		
+		if ((error = dlerror()) != NULL) {
+			std::cout << error << std::endl;
+			exit(1);
+		}
+		std::cout << "calling drawGame" << std::endl;
+		drawGame();
+		dlclose(handle);
+		return 0;
 	}
 /*
 	MAIN GAME LOOP END
