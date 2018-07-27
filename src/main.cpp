@@ -1,5 +1,5 @@
-
 #include <iostream>
+#include <cstdlib>
 #include "Game.hpp"
 
 
@@ -13,8 +13,8 @@ int main(int argc, char **argv)
 
 		Game game;
 
-		int Height = std::atoi(argv[1]);
-		int Width = std::atoi(argv[1]);
+		int Height = atoi(argv[1]);
+		int Width = atoi(argv[1]);
 		std::cout << Height << " :: " << Width << std::endl;
 
 		game.runLoop();

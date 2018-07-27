@@ -63,7 +63,6 @@
 			std::cout << dlerror() << std::endl;
 			exit(1);
 		}
-		// *(void **) (&cosine)
 		
 		*(void **)(&getSfml) = dlsym(handle,"createSfmlLib");
 		

@@ -1,6 +1,6 @@
 #pragma once
 #include "LibInterface.hpp"
-#include "../lib/include/SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
 
 
 class sfmlLib : public LibInterface{
