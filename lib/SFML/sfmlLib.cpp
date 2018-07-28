@@ -58,11 +58,11 @@
 	GETTERS END
 */
 
-sfmlLib *createSfmlLib(){
+sfmlLib *createLib(){
 	return new sfmlLib();
 }
 
-void deleteSfmlLib(sfmlLib *lib){
+void deleteLib(sfmlLib *lib){
 	delete lib;
 }
 

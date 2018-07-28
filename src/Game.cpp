@@ -56,7 +56,11 @@
 
 		LibInterface *(*getSfml)(void);
 		
-		handle = dlopen("libsfmlLib.dylib",  RTLD_LOCAL | RTLD_LAZY);
+
+		// handle = dlopen("libsfmlLib.so",  RTLD_LOCAL | RTLD_LAZY);
+			handle = dlopen("libsdlLib.so",  RTLD_LOCAL | RTLD_LAZY);
+		// handle = dlopen("libsfmlLib.dylib",  RTLD_LOCAL | RTLD_LAZY);
+
 
 		if (!handle) 
 		{
@@ -64,7 +68,7 @@
 			exit(1);
 		}
 		
-		*(void **)(&getSfml) = dlsym(handle,"createSfmlLib");
+		*(void **)(&getSfml) = dlsym(handle,"createLib");
 		
 		if ((error = dlerror()) != NULL) {
 			std::cout << error << std::endl;

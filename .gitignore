@@ -1,8 +1,20 @@
 
 build/
 lib/*
+
+#keep lib dir
 !lib/
+#keep lib/SFML dir
 !lib/SFML/
+#keep lib/SDL dir
 !lib/SDL/
-lib/SFML/*
-!lib/SFML/sfmlLib*
+#disgard lib/SFML/build dir
+lib/SFML/build/*
+#disgard lib/SDL/build dir
+lib/SDL/build/*
+
+#keep lib/SFML/(libSfml.*
+!lib/SFML/sfmlLib.*
+
+#keep lib/SFML/(libSfml.*
+!lib/SDL/sdlLib.*

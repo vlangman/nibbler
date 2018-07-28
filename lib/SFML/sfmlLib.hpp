@@ -38,6 +38,6 @@ class sfmlLib : public LibInterface{
 };
 
 extern "C" {
-	sfmlLib *createSfmlLib();
-	void deleteSfmlLib(sfmlLib *lib);
+	sfmlLib *createLib();
+	void deleteLib(sfmlLib *lib);
 }
