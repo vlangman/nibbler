@@ -8,7 +8,7 @@ protected:
     int m_y;
     int m_width;
     int m_height;
-    int m_color;
+    E_COLOR m_color;
 
     bool mShouldUpdate;
 public:
@@ -16,12 +16,12 @@ public:
     int getY();
     int getWidth();
     int getHeight();
-    int getColor();
+    E_COLOR getColor();
 
     void setPosition(int x, int y);
 
     Drawable();
-    virtual void init(int x, int y, int width, int height, int color);
+    virtual void init(int x, int y, int width, int height, E_COLOR color);
     virtual void update();
     virtual void handleEvent(E_EVENT event);
 

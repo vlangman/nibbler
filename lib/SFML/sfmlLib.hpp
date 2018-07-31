@@ -30,7 +30,7 @@ class sfmlLib : public LibInterface{
 	*/
 		void init(int width, int height);
 		void drawGame(std::vector<Drawable *> &drawList);
-		void draw(int x, int y, int width, int height);
+		void draw(int x, int y, int width, int height, E_COLOR color);
 		void clearScreen();
 		void displayScreen();
 		

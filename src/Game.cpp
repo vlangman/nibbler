@@ -5,7 +5,8 @@
 #include "Drawable.hpp"
 #include "LibInterface.hpp"
 #include "../lib/SFML/sfmlLib.hpp"
-#include "Snake.hpp"
+#include "SnakeHead.hpp"
+#include "Food.hpp"
 /*
 	- CANONICAL CONSTRUCTORS START
 */
@@ -59,11 +60,11 @@ void Game::handleEvents()
 	E_EVENT event = _library->handleEvents();
 
 	if (event == E_EVENT::EVENT_CLOSE_WINDOW){
-		m_shouldRun = false;
+		closeGame();
 		return;
 	}
 
-	for (auto i : m_drawlist)
+	for (auto i : m_entityList)
 	{
 		i->handleEvent(event);
 	}
@@ -78,16 +79,42 @@ int 	Game::runLoop(void)
 	{
 		handleEvents();
 		_library->clearScreen();
-		for (auto i : m_drawlist)
+
+		usleep(60000);
+
+		for (auto i : m_entityList)
 		{
-			usleep(60000);
-			if (i->isUpdateable())
-				i->update();
-			_library->draw(i->getX(),i->getY(),i->getWidth(),i->getHeight());
+			i->update();
+			_library->draw(i->getX(),i->getY(),i->getWidth(),i->getHeight(), i->getColor());
 		}
 		_library->displayScreen();
+		cleanup();
+	}
+}
+
+void Game::cleanup()
+{
+	for (std::vector<GameEntity*>::iterator it=m_entityList.begin(); 
+								it!=m_entityList.end(); 
+								/*it++*/) 
+	{
+
+	if(!((*it)->isAlive())) 
+	{
+		delete ((*it));
+		it = m_entityList.erase(it);
+	}
+	else 
+		++it;
 	}
 
+	
+}
+
+void Game::setWindow(int x, int y)
+{
+	window_x = x;
+	window_y = y;
 }
 
 void Game::init(E_LIBRARY_CHOICE libChoice)
@@ -95,25 +122,28 @@ void Game::init(E_LIBRARY_CHOICE libChoice)
 	m_shouldRun = true;
 	useLibrary(libChoice);
 
-	//Drawable *drawable = new Drawable();
-	//drawable->init(20,20,20,20,1);
-	//m_drawlist.push_back(drawable);
 
-	Snake *snake = new Snake();
-	snake->init(20,20,10,10,1,E_DIRECTION::RIGHT, this);
-	m_drawlist.push_back(snake);
+	SnakeHead *snake = new SnakeHead();
+	snake->init(window_x/2,window_y/2,10,10,E_COLOR::COLOR_YELLOW,E_DIRECTION::RIGHT, this);
+	addEntity(snake);
+
+	Food *food = new Food();
+	food->init(window_x/2+10,window_y/2, 10,10, E_COLOR::COLOR_RED, this);
+	addEntity(food);
 }
 
 
 void	Game::closeGame()
 {
+	m_shouldRun = false;
 	useLibrary(E_LIBRARY_CHOICE::NONE);
 }
 
-void	Game::addEntity(Drawable *drawable)
+void	Game::addEntity(GameEntity *entity)
 {
-	m_drawlist.push_back(drawable);
+	m_entityList.push_back(entity);
 }
+
 
 void	Game::useLibrary(E_LIBRARY_CHOICE libChoice)
 {
@@ -132,7 +162,7 @@ void	Game::useLibrary(E_LIBRARY_CHOICE libChoice)
 
 		if (libChoice == E_LIBRARY_CHOICE::SFML)
 		{
-			handle = dlopen("libsfmlLib.so",  RTLD_LOCAL | RTLD_LAZY);\
+			handle = dlopen("libsfmlLib.so",  RTLD_LOCAL | RTLD_LAZY);
 			if (!handle) 
 			{
 				std::cout << dlerror() << std::endl;
@@ -147,7 +177,7 @@ void	Game::useLibrary(E_LIBRARY_CHOICE libChoice)
 			}
 
 			_library = getLibrary();
-			_library->init(300,300);
+			_library->init(window_x,window_y);
 		}
 		else if(libChoice == E_LIBRARY_CHOICE::NONE)
 		{

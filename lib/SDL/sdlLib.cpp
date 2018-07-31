@@ -73,7 +73,7 @@ E_EVENT SdlLib::handleEvents()
 
 }
 
-void SdlLib::draw(int x, int y, int width, int height)
+void SdlLib::draw(int x, int y, int width, int height, E_COLOR color)
 {
 	
 }

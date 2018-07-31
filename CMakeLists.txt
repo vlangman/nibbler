@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 3.11 FATAL_ERROR)
 project(nibbler)
 include(ExternalProject)
 include(FetchContent)
-add_executable(nibbler src/main.cpp src/Game.cpp src/Drawable.cpp src/Snake.cpp src/SnakeBody.cpp)
+add_executable(nibbler src/main.cpp src/Game.cpp src/Drawable.cpp src/Snake.cpp src/SnakeHead.cpp src/Food.cpp src/GameEntity.cpp)
 set(EXTERNAL_INSTALL_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
 

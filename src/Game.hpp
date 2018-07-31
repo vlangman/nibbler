@@ -7,6 +7,7 @@
 */
 
 class Drawable;
+class GameEntity;
 
 class LibInterface;
 
@@ -28,14 +29,20 @@ enum E_EVENT
 	EVENT_KEYBAORD_DOWN
 };
 
+enum E_COLOR 
+{
+	COLOR_YELLOW,
+	COLOR_RED
+};
+
+
+
 
 class Game {
 
 private:
 	int window_x;
 	int window_y;
-
-	std::vector<Drawable*> m_drawlist; 
 
 	LibInterface *_library;
 	E_LIBRARY_CHOICE m_curLib;
@@ -45,6 +52,7 @@ private:
 
 	bool 	m_shouldRun;
 public:
+	std::vector<GameEntity*> m_entityList;
 	
 	Game(void);
 	~Game(void);
@@ -61,6 +69,8 @@ public:
 	int getWindowY(void) const;
 	int getVerbose(void) const;
 
+	void setWindow(int x, int y);
+
 	/*
 		MAIN GAME LOOP
 	*/
@@ -69,5 +79,7 @@ public:
 	void 	init(E_LIBRARY_CHOICE libChoice);
 	void	closeGame();
 
-	void	addEntity(Drawable *drawable);
+	void	addEntity(GameEntity *entity);
+
+	void	cleanup();
 };

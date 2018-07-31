@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include "Game.hpp"
 #include "Drawable.hpp"
-
+#include <string>
 
 int main(int argc, char **argv)
 {
@@ -13,11 +13,8 @@ int main(int argc, char **argv)
 	else {
 		Game game;
 
-		int Height = atoi(argv[1]);
-		int Width = atoi(argv[1]);
-		std::cout << Height << " :: " << Width << std::endl;
-
 		// Use SFML by default
+		game.setWindow(std::stoi(argv[1]), std::stoi(argv[2]));
 		game.init(E_LIBRARY_CHOICE::SFML);
 		game.runLoop();
 		game.closeGame();

@@ -1,5 +1,5 @@
 #pragma once
-#include "Drawable.hpp"
+#include "GameEntity.hpp"
 
 enum E_DIRECTION
 {
@@ -11,20 +11,23 @@ enum E_DIRECTION
 
 class Game;
 
-class Snake : public Drawable
+class Snake : public GameEntity
 {
 protected:
     E_DIRECTION mDirection;
     int mSpeed;
-    Game *m_world;
     Snake *m_child;
 public:
-    virtual void init(int x, int y, int width, int height, int color, E_DIRECTION startDirection, Game *world);
-    void update();
+    virtual void init(int x, int y, int width, int height, E_COLOR color, E_DIRECTION startDirection, Game *world);
+    virtual void update();
     virtual void handleEvent(E_EVENT event);
+
+    Snake();
 
     int getSpeed();
     void changeDirection(E_DIRECTION dir);
     void setChild(Snake *child);
+    Snake *getChild();
+
     void moveToNext(int x, int y);
 };

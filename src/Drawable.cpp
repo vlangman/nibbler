@@ -1,6 +1,6 @@
 #include "Drawable.hpp"
 
-void Drawable::init(int x, int y, int width, int height, int color)
+void Drawable::init(int x, int y, int width, int height, E_COLOR color)
 {
     this->m_x = x;
     this->m_y = y;
@@ -37,9 +37,9 @@ int Drawable::getHeight()
 {
     return m_height;
 }
-int Drawable::getColor()
+E_COLOR Drawable::getColor()
 {
-
+    return m_color;
 }
 
 bool Drawable::isUpdateable(){

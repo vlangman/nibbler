@@ -63,7 +63,7 @@ void sfmlLib::init(int width, int height)
 {
 	//getting the default bpp (bits per pixel) for the desktop
 	// sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-	window = new sf::RenderWindow(sf::VideoMode(500, 500, 32),"WHAT THE FUCK IS GOIN ON??");
+	window = new sf::RenderWindow(sf::VideoMode(width, height, 32),"WHAT THE FUCK IS GOIN ON??");
 }
 
 sfmlLib *createLib(){
@@ -100,11 +100,16 @@ E_EVENT sfmlLib::handleEvents()
 	return E_EVENT::EVENT_NONE;
 }
 
-void sfmlLib::draw(int x, int y, int width, int height)
+void sfmlLib::draw(int x, int y, int width, int height, E_COLOR color)
 {
 	sf::RectangleShape rectangle(sf::Vector2f(width, height));
 	rectangle.setPosition(x, y);
-	rectangle.setFillColor(sf::Color::Yellow);
+
+	switch (color)
+	{
+		case (E_COLOR::COLOR_YELLOW): rectangle.setFillColor(sf::Color::Yellow); break;
+		case (E_COLOR::COLOR_RED): rectangle.setFillColor(sf::Color::Red); break;
+	}
 	window->draw(rectangle);
 }
 
