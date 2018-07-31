@@ -1,10 +1,12 @@
 #pragma once
 #include <iostream>
-#include "LibInterface.hpp"
+#include <vector>
 
 /*
 	- Game class in charge of methods for the main game loop 
 */
+
+class Drawable;
 
 class LibInterface;
 
@@ -12,8 +14,20 @@ enum E_LIBRARY_CHOICE
 {
 	SFML, 
 	SDL,
-	NCURSES
+	NCURSES,
+	NONE
 };
+
+enum E_EVENT 
+{
+	EVENT_NONE,
+	EVENT_CLOSE_WINDOW,
+	EVENT_KEYBOARD_RIGHT,
+	EVENT_KEYBOARD_LEFT,
+	EVENT_KEYBOARD_UP,
+	EVENT_KEYBAORD_DOWN
+};
+
 
 class Game {
 
@@ -21,8 +35,15 @@ private:
 	int window_x;
 	int window_y;
 
+	std::vector<Drawable*> m_drawlist; 
+
 	LibInterface *_library;
-	E_LIBRARY_CHOICE curLib;
+	E_LIBRARY_CHOICE m_curLib;
+
+	void	useLibrary(E_LIBRARY_CHOICE libChoice);
+	void	handleEvents();
+
+	bool 	m_shouldRun;
 public:
 	
 	Game(void);
@@ -45,7 +66,8 @@ public:
 	*/
 
 	int 	runLoop(void);
-	void	useLibrary(E_LIBRARY_CHOICE libChoice);
+	void 	init(E_LIBRARY_CHOICE libChoice);
 	void	closeGame();
 
+	void	addEntity(Drawable *drawable);
 };

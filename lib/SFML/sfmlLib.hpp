@@ -1,7 +1,7 @@
 #pragma once
 #include "LibInterface.hpp"
 #include <SFML/Graphics.hpp>
-
+#include <vector>
 
 class sfmlLib : public LibInterface{
 	private:
@@ -9,6 +9,7 @@ class sfmlLib : public LibInterface{
 		int 		window_y;
 		bool		verbose;
 
+		sf::RenderWindow *window;
 	public:
 	/*
 		default constructors and deconstructors for canonical form
@@ -27,7 +28,13 @@ class sfmlLib : public LibInterface{
 	/* 
 		VIRTUAL INHERITED ABSTRACT FUCNTIONS
 	*/
-		void drawGame(void);
+		void init(int width, int height);
+		void drawGame(std::vector<Drawable *> &drawList);
+		void draw(int x, int y, int width, int height);
+		void clearScreen();
+		void displayScreen();
+		
+		E_EVENT handleEvents();
 
 	/* 
 		GETTER AND SETTERS

@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 3.11 FATAL_ERROR)
 project(nibbler)
 include(ExternalProject)
 include(FetchContent)
-add_executable(nibbler src/main.cpp src/Game.cpp)
+add_executable(nibbler src/main.cpp src/Game.cpp src/Drawable.cpp src/Snake.cpp src/SnakeBody.cpp)
 set(EXTERNAL_INSTALL_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
 
@@ -39,7 +39,7 @@ if(UNIX AND APPLE)
 	
 elseif(UNIX AND NOT APPLE)
 #LINUX
-	set(CMAKE_CXX_FLAGS " -Wall -Wextra -std=c++11")
+	set(CMAKE_CXX_FLAGS " -Wall -Wextra -std=c++11 -fPIC")
 	message(STATUS "Compiling for linux")
 	set(EXTERNAL_INSTALL_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 	set(SFML_INSTALL_DIR ${EXTERNAL_INSTALL_LOCATION}/SFML/build)
@@ -90,7 +90,7 @@ elseif(UNIX AND NOT APPLE)
 		sfml-window
 		sfml-system
 	)
-	target_link_libraries(sdlLib ${EXTERNAL_INSTALL_LOCATION}/SDL/build/libSDL2-2.0.so)
+	#target_link_libraries(sdlLib ${EXTERNAL_INSTALL_LOCATION}/SDL/build/libSDL2-2.0.so)
 
 	target_link_libraries(nibbler sfmlLib ${CMAKE_DL_LIBS})
 

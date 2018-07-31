@@ -27,7 +27,12 @@ class SdlLib : public LibInterface{
 	/* 
 		VIRTUAL INHERITED ABSTRACT FUCNTIONS
 	*/
-		void drawGame(void);
+		void drawGame(std::vector<Drawable *> &drawList);
+		void draw(int x, int y, int width, int height);
+		void init(int width, int height);
+		void clearScreen();
+		void displayScreen();
+		E_EVENT handleEvents();
 
 	/* 
 		GETTER AND SETTERS

@@ -1,5 +1,7 @@
 #include "sdlLib.hpp"
+#include "Drawable.hpp"
 /*
+
 	default constructors and deconstructors for canonical form
 */
 	 SdlLib::SdlLib(){
@@ -66,7 +68,31 @@ void deleteLib(SdlLib *lib){
 	delete lib;
 }
 
-void SdlLib::drawGame(void){
+E_EVENT SdlLib::handleEvents()
+{
+
+}
+
+void SdlLib::draw(int x, int y, int width, int height)
+{
+	
+}
+
+void SdlLib::clearScreen()
+{
+
+}
+void SdlLib::displayScreen()
+{
+	
+}
+
+void SdlLib::init(int width, int height)
+{
+
+}
+
+void SdlLib::drawGame(std::vector<Drawable *> &drawList){
 	
     SDL_Window *window;                    // Declare a pointer
 

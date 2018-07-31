@@ -1,4 +1,5 @@
 #include "sfmlLib.hpp"
+#include "Drawable.hpp"
 /*
 	default constructors and deconstructors for canonical form
 */
@@ -58,6 +59,13 @@
 	GETTERS END
 */
 
+void sfmlLib::init(int width, int height)
+{
+	//getting the default bpp (bits per pixel) for the desktop
+	// sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+	window = new sf::RenderWindow(sf::VideoMode(500, 500, 32),"WHAT THE FUCK IS GOIN ON??");
+}
+
 sfmlLib *createLib(){
 	return new sfmlLib();
 }
@@ -66,30 +74,79 @@ void deleteLib(sfmlLib *lib){
 	delete lib;
 }
 
-void sfmlLib::drawGame(void){
-	std::cout << "DRAW DA SNEK HERE" << std::endl;
-
-	//getting the default bpp (bits per pixel) for the desktop
-		// sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-		sf::RenderWindow window(
-			sf::VideoMode(500, 500, 32),
-			"WHAT THE FUCK IS GOIN ON??"
-		);
-
-		sf::CircleShape shape(100.f);
-		shape.setFillColor(sf::Color::Yellow);
-
-		while (window.isOpen())
+E_EVENT sfmlLib::handleEvents()
+{
+	sf::Event event;
+	while (window->pollEvent(event))
+	{
+		if (event.type == sf::Event::Closed)
+			return E_EVENT::EVENT_CLOSE_WINDOW;
+		if (event.type == sf::Event::KeyPressed)
 		{
-			sf::Event event;
-			while (window.pollEvent(event))
-			{
-				if (event.type == sf::Event::Closed)
-					window.close();
-			}
-
-			window.clear();
-			window.draw(shape);
-			window.display();
+			if (event.key.code == sf::Keyboard::Escape)
+				return E_EVENT::EVENT_CLOSE_WINDOW;
+			else if (event.key.code == sf::Keyboard::Right)
+				return E_EVENT::EVENT_KEYBOARD_RIGHT;
+			else if (event.key.code == sf::Keyboard::Left)
+				return E_EVENT::EVENT_KEYBOARD_LEFT;
+			else if (event.key.code == sf::Keyboard::Right)
+				return E_EVENT::EVENT_KEYBOARD_RIGHT;
+			else if (event.key.code == sf::Keyboard::Up)
+				return E_EVENT::EVENT_KEYBOARD_UP;
+			else if (event.key.code == sf::Keyboard::Down)
+				return E_EVENT::EVENT_KEYBAORD_DOWN;
 		}
+	}
+	return E_EVENT::EVENT_NONE;
+}
+
+void sfmlLib::draw(int x, int y, int width, int height)
+{
+	sf::RectangleShape rectangle(sf::Vector2f(width, height));
+	rectangle.setPosition(x, y);
+	rectangle.setFillColor(sf::Color::Yellow);
+	window->draw(rectangle);
+}
+
+void sfmlLib::clearScreen()
+{
+	window->clear();
+}
+void sfmlLib::displayScreen()
+{
+	window->display();
+}
+
+void sfmlLib::drawGame(std::vector<Drawable *> &drawList){
+
+	// std::cout << "DRAW DA SNEK HERE" << std::endl;
+
+	// std::cout << drawList.size() << std::endl;
+
+
+	// 	//sf::CircleShape shape(100.f);
+
+	// 	while (window.isOpen())
+	// 	{
+	// 		sf::Event event;
+	// 		while (window.pollEvent(event))
+	// 		{
+	// 			if (event.type == sf::Event::Closed)
+	// 				window.close();
+
+				
+	// 		}
+
+	// 		window.clear();
+
+	// 		for (auto i : drawList)
+	// 		{
+	// 			std::cout << "HEEEEEEEEEEEEEEEEH" <<  i->getWidth() << std::endl;
+	// 			sf::RectangleShape rectangle(sf::Vector2f(10, 20));
+	// 			//rectangle.setPosition(10, 20);
+	// 			//rectangle.setFillColor(sf::Color::Yellow);
+	// 			//window.draw(rectangle);
+	// 		}
+	// 		window.display();
+	// 	}
 }
