@@ -1,6 +1,7 @@
 #pragma once
 #include "LibInterface.hpp"
 #include <SDL.h>
+#include <SDL_opengl.h>
 
 
 class SdlLib : public LibInterface{
@@ -9,6 +10,8 @@ class SdlLib : public LibInterface{
 		int 		window_y;
 		bool		verbose;
 
+		SDL_Window *window;
+		SDL_Renderer* renderer;
 	public:
 	/*
 		default constructors and deconstructors for canonical form

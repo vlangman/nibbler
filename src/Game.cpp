@@ -17,7 +17,6 @@ Game::Game(void){
 };
 
 Game::~Game(void){
-	useLibrary(E_LIBRARY_CHOICE::NONE);
 	return;
 };
 
@@ -60,8 +59,15 @@ void Game::handleEvents()
 	E_EVENT event = _library->handleEvents();
 
 	if (event == E_EVENT::EVENT_CLOSE_WINDOW){
+		std::cout << "CLOSING GAME" << std::endl;
 		closeGame();
 		return;
+	}
+	else if (event == E_EVENT::EVENT_KEYBOARD_1){
+		useLibrary(E_LIBRARY_CHOICE::SFML);
+	}
+	else if (event == E_EVENT::EVENT_KEYBOARD_2){
+		useLibrary(E_LIBRARY_CHOICE::SDL);
 	}
 
 	for (auto i : m_entityList)
@@ -147,61 +153,48 @@ void	Game::addEntity(GameEntity *entity)
 
 void	Game::useLibrary(E_LIBRARY_CHOICE libChoice)
 {
-	void *handle;
 	char *error;
+	std::string libString;
+
 
 	LibInterface *(*getLibrary)(void);
+	void (*deleteLibrary)(LibInterface*);
 
 	// Do nothing if we already have the lib loaded
 	if (libChoice != m_curLib)
 	{
 		if (_library != NULL){
-			dlclose(_library);
+			deleteLibrary = (void(*)(LibInterface*)) dlsym(_libHandle ,"deleteLib");
+			dlclose(_libHandle);
+			std::cout << "DELETING" << std::endl;
+			deleteLibrary(_library);
 		}
 
-
-		if (libChoice == E_LIBRARY_CHOICE::SFML)
-		{
-			handle = dlopen("libsfmlLib.dylib",  RTLD_LOCAL | RTLD_LAZY);
-			if (!handle) 
-			{
-				std::cout << dlerror() << std::endl;
-				exit(1);
-			}
-
-			*(void **)(&getLibrary) = dlsym(handle,"createLib");
-
-			if ((error = dlerror()) != NULL) {
-				std::cout << error << std::endl;
-				exit(1);
-			}
-
-			_library = getLibrary();
-			_library->init(window_x,window_y);
-		}
+		if (libChoice == E_LIBRARY_CHOICE::SDL)
+			libString = "libsdlLib.dylib";
+		else if (libChoice == E_LIBRARY_CHOICE::SFML)
+			libString = "libsfmlLib.dylib";
 		else if (libChoice == E_LIBRARY_CHOICE::NCURSES)
-		{
-			handle = dlopen("libncursesLib.dylib",  RTLD_LOCAL | RTLD_LAZY);
-			if (!handle) 
-			{
-				std::cout << dlerror() << std::endl;
-				exit(1);
-			}
-
-			*(void **)(&getLibrary) = dlsym(handle,"createLib");
-
-			if ((error = dlerror()) != NULL) {
-				std::cout << error << std::endl;
-				exit(1);
-			}
-
-			_library = getLibrary();
-			_library->init(window_x,window_y);
+			libString = "libncursesLib.dylib";
+		else if (libChoice == E_LIBRARY_CHOICE::NONE)
+			return;
+		
+		_libHandle = dlopen(libString.c_str(), RTLD_LOCAL | RTLD_LAZY);
+		if (!_libHandle){
+			std::cout << "Could not dlopen: " << libString.c_str() << std::endl;
+			std::cout << dlerror() << std::endl;
+			exit(1);
 		}
 
-		else if(libChoice == E_LIBRARY_CHOICE::NONE)
-		{
+		*(void **)(&getLibrary) = dlsym(_libHandle ,"createLib");
 
+		if ((error = dlerror()) != NULL) {
+			std::cout << error << std::endl;
+			exit(1);
 		}
+
+		m_curLib = libChoice;
+		_library = getLibrary();
+		_library->init(window_x,window_y);
 	}
 }

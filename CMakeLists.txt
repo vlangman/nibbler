@@ -75,7 +75,7 @@ if(UNIX AND APPLE)
 
 	#link my libraries to dylibs
 	target_link_libraries(ncursesLib ${CURSES_LIBRARIES})
-	target_link_libraries(sdlLib ${EXTERNAL_INSTALL_LOCATION}/SDL/build/libSDL2.dylib)
+	target_link_libraries(sdlLib "${EXTERNAL_INSTALL_LOCATION}/SDL/build/libSDL2.dylib")
 	target_link_libraries(sfmlLib sfml-graphics sfml-window sfml-system)
 	target_link_libraries(nibbler sfmlLib sdlLib ncursesLib)
 	

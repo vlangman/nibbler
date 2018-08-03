@@ -26,7 +26,10 @@ enum E_EVENT
 	EVENT_KEYBOARD_RIGHT,
 	EVENT_KEYBOARD_LEFT,
 	EVENT_KEYBOARD_UP,
-	EVENT_KEYBAORD_DOWN
+	EVENT_KEYBAORD_DOWN,
+	EVENT_KEYBOARD_1,
+	EVENT_KEYBOARD_2,
+	EVENT_KEYBOARD_3
 };
 
 enum E_COLOR 
@@ -46,6 +49,7 @@ private:
 
 	LibInterface *_library;
 	E_LIBRARY_CHOICE m_curLib;
+	void *_libHandle;
 
 	void	useLibrary(E_LIBRARY_CHOICE libChoice);
 	void	handleEvents();

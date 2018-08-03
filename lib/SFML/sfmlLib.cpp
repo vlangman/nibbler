@@ -11,9 +11,7 @@
 	}
 
 	 sfmlLib::~sfmlLib(){
-		if (this->verbose){
-			std::cout << "sfmlLib VOID DECONSTRUCTOR called." << std::endl;
-		}
+		delete window;
 		return;
 	}
 
@@ -95,6 +93,12 @@ E_EVENT sfmlLib::handleEvents()
 				return E_EVENT::EVENT_KEYBOARD_UP;
 			else if (event.key.code == sf::Keyboard::Down)
 				return E_EVENT::EVENT_KEYBAORD_DOWN;
+			else if (event.key.code == sf::Keyboard::Num1)
+				return E_EVENT::EVENT_KEYBOARD_1;
+			else if (event.key.code == sf::Keyboard::Num2)
+				return E_EVENT::EVENT_KEYBOARD_2;
+			else if (event.key.code == sf::Keyboard::Num3)
+				return E_EVENT::EVENT_KEYBOARD_3;
 		}
 	}
 	return E_EVENT::EVENT_NONE;
