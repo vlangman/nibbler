@@ -18,8 +18,6 @@ int main(int argc, char **argv)
 		game.init(E_LIBRARY_CHOICE::NCURSES);
 		game.runLoop();
 		game.closeGame();
-
-		
 	}
 
 	return 0;
