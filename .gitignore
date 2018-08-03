@@ -8,13 +8,21 @@ lib/*
 !lib/SFML/
 #keep lib/SDL dir
 !lib/SDL/
+#keep lib NCURSES dir
+!lib/NCURSES/
+
 #disgard lib/SFML/build dir
 lib/SFML/build/*
 #disgard lib/SDL/build dir
 lib/SDL/build/*
+#disgard lib/NCURSES/build dir
+lib/NCURSES/build/*
 
-#keep lib/SFML/(libSfml.*
+#keep lib/SFML/(SfmlLib.*
 !lib/SFML/sfmlLib.*
 
-#keep lib/SFML/(libSfml.*
+#keep lib/SDL/(SDLlLib.*
 !lib/SDL/sdlLib.*
+
+#keep lib/NCURSES/(ncursesLib.*
+!lib/NCURSES/ncursesLib.*

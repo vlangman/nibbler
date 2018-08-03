@@ -123,35 +123,5 @@ void sfmlLib::displayScreen()
 }
 
 void sfmlLib::drawGame(std::vector<Drawable *> &drawList){
-
-	// std::cout << "DRAW DA SNEK HERE" << std::endl;
-
-	// std::cout << drawList.size() << std::endl;
-
-
-	// 	//sf::CircleShape shape(100.f);
-
-	// 	while (window.isOpen())
-	// 	{
-	// 		sf::Event event;
-	// 		while (window.pollEvent(event))
-	// 		{
-	// 			if (event.type == sf::Event::Closed)
-	// 				window.close();
-
-				
-	// 		}
-
-	// 		window.clear();
-
-	// 		for (auto i : drawList)
-	// 		{
-	// 			std::cout << "HEEEEEEEEEEEEEEEEH" <<  i->getWidth() << std::endl;
-	// 			sf::RectangleShape rectangle(sf::Vector2f(10, 20));
-	// 			//rectangle.setPosition(10, 20);
-	// 			//rectangle.setFillColor(sf::Color::Yellow);
-	// 			//window.draw(rectangle);
-	// 		}
-	// 		window.display();
-	// 	}
+	
 }

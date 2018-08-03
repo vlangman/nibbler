@@ -162,7 +162,7 @@ void	Game::useLibrary(E_LIBRARY_CHOICE libChoice)
 
 		if (libChoice == E_LIBRARY_CHOICE::SFML)
 		{
-			handle = dlopen("libsfmlLib.so",  RTLD_LOCAL | RTLD_LAZY);
+			handle = dlopen("libsfmlLib.dylib",  RTLD_LOCAL | RTLD_LAZY);
 			if (!handle) 
 			{
 				std::cout << dlerror() << std::endl;
@@ -179,6 +179,26 @@ void	Game::useLibrary(E_LIBRARY_CHOICE libChoice)
 			_library = getLibrary();
 			_library->init(window_x,window_y);
 		}
+		else if (libChoice == E_LIBRARY_CHOICE::NCURSES)
+		{
+			handle = dlopen("libncursesLib.dylib",  RTLD_LOCAL | RTLD_LAZY);
+			if (!handle) 
+			{
+				std::cout << dlerror() << std::endl;
+				exit(1);
+			}
+
+			*(void **)(&getLibrary) = dlsym(handle,"createLib");
+
+			if ((error = dlerror()) != NULL) {
+				std::cout << error << std::endl;
+				exit(1);
+			}
+
+			_library = getLibrary();
+			_library->init(window_x,window_y);
+		}
+
 		else if(libChoice == E_LIBRARY_CHOICE::NONE)
 		{
 
