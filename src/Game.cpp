@@ -75,8 +75,6 @@ void Game::handleEvents()
 		i->handleEvent(event);
 	}
 	
-
-
 }
 
 int 	Game::runLoop(void) 
@@ -96,6 +94,7 @@ int 	Game::runLoop(void)
 		_library->displayScreen();
 		cleanup();
 	}
+	return 0;
 }
 
 void Game::cleanup()
@@ -129,15 +128,14 @@ void Game::init(E_LIBRARY_CHOICE libChoice)
 	useLibrary(libChoice);
 
 
-	SnakeHead *snake = new SnakeHead();
-	snake->init(window_x/2,window_y/2,10,10,E_COLOR::COLOR_YELLOW,E_DIRECTION::RIGHT, this);
-	addEntity(snake);
+	// SnakeHead *snake = new SnakeHead();
+	// snake->init(window_x/2,window_y/2,10,10,E_COLOR::COLOR_YELLOW,E_DIRECTION::RIGHT, this);
+	// addEntity(snake);
 
 	Food *food = new Food();
 	food->init(window_x/2+10,window_y/2, 10,10, E_COLOR::COLOR_RED, this);
 	addEntity(food);
 }
-
 
 void	Game::closeGame()
 {
@@ -150,32 +148,39 @@ void	Game::addEntity(GameEntity *entity)
 	m_entityList.push_back(entity);
 }
 
-
 void	Game::useLibrary(E_LIBRARY_CHOICE libChoice)
 {
 	char *error;
 	std::string libString;
-
-
 	LibInterface *(*getLibrary)(void);
 	void (*deleteLibrary)(LibInterface*);
 
 	// Do nothing if we already have the lib loaded
 	if (libChoice != m_curLib)
 	{
-		if (_library != NULL){
+		if (_library != NULL) {
 			deleteLibrary = (void(*)(LibInterface*)) dlsym(_libHandle ,"deleteLib");
 			dlclose(_libHandle);
 			std::cout << "DELETING" << std::endl;
 			deleteLibrary(_library);
 		}
 
+		// if (libChoice == E_LIBRARY_CHOICE::SDL)
+		// 	libString = "libsdlLib.dylib";
+		// else if (libChoice == E_LIBRARY_CHOICE::SFML)
+		// 	libString = "libsfmlLib.dylib";
+		// else if (libChoice == E_LIBRARY_CHOICE::NCURSES)
+		// 	libString = "libncursesLib.dylib";
+		// else if (libChoice == E_LIBRARY_CHOICE::NONE)
+		// 	return;
+
+
 		if (libChoice == E_LIBRARY_CHOICE::SDL)
-			libString = "libsdlLib.dylib";
+			libString = "libsdlLib.so";
 		else if (libChoice == E_LIBRARY_CHOICE::SFML)
-			libString = "libsfmlLib.dylib";
+			libString = "libsfmlLib.so";
 		else if (libChoice == E_LIBRARY_CHOICE::NCURSES)
-			libString = "libncursesLib.dylib";
+			libString = "libncursesLib.so";
 		else if (libChoice == E_LIBRARY_CHOICE::NONE)
 			return;
 		

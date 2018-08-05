@@ -1,4 +1,5 @@
 #include "ncursesLib.hpp"
+#include <unistd.h>
 
 /* 
 	GETTER AND SETTERS
@@ -43,9 +44,9 @@ NcursesLib & NcursesLib::operator=(const NcursesLib & _lib){
 
 
  NcursesLib::NcursesLib(const int _W, const int _H){
- 	this->window_x = _W;
+	this->window_x = _W;
 	this->window_y = _H;
-  	return;
+	return;
  }
 
 
@@ -59,87 +60,62 @@ void NcursesLib::drawGame(std::vector<Drawable *> &drawList){
 }
 
 void NcursesLib::draw(int x, int y, int width, int height, E_COLOR color){
+	border('|', '|', '-',  '-', '+', '+', '+', '+');
+	move(y, x);
+	wmove(this->window,  y,  x);
 
+	getch();
+	refresh();
+	addch('0');
 }
 
-
-
 void NcursesLib::init(int width, int height){
-	std::cout << "here2" << std::endl;
 
-	// WINDOW *my_win;
-	// int startx, starty, width, height;
-	// int ch;
-
-	// initscr();			/* Start curses mode 		*/
-	// cbreak();			/* Line buffering disabled, Pass on
-	// 				 * everty thing to me 		*/
-	// keypad(stdscr, TRUE);		/* I need that nifty F1 	*/
-
-	// height = 3;
-	// width = 10;
-	// starty = (LINES - height) / 2;	/* Calculating for a center placement */
-	// startx = (COLS - width) / 2;	/* of the window		*/
-	// printw("Press F1 to exit");
-	// refresh();
-	// my_win = create_newwin(height, width, starty, startx);
-
-	// while((ch = getch()) != KEY_F(1))
-	// {	switch(ch)
-	// 	{	case KEY_LEFT:
-	// 			destroy_win(my_win);
-	// 			my_win = create_newwin(height, width, starty,--startx);
-	// 			break;
-	// 		case KEY_RIGHT:
-	// 			destroy_win(my_win);
-	// 			my_win = create_newwin(height, width, starty,++startx);
-	// 			break;
-	// 		case KEY_UP:
-	// 			destroy_win(my_win);
-	// 			my_win = create_newwin(height, width, --starty,startx);
-	// 			break;
-	// 		case KEY_DOWN:
-	// 			destroy_win(my_win);
-	// 			my_win = create_newwin(height, width, ++starty,startx);
-	// 			break;	
-	// 	}
-	// }
-		
-	// endwin();			/* End curses mode		  */
-	
+	int starty = (LINES - height) / 2;	/* Calculating for a center placement */
+	int startx = (COLS - width) / 2;	/* of the window		*/
 
 	initscr();
 	cbreak();
-	keypad(stdscr, TRUE);
-
-	this->window = newwin(height, width, 0, 0);
-	box(this->window, 0 , 0);		/* 0, 0 gives default characters 
-					 				* for the vertical and horizontal
-					 				* lines			*/
-	wrefresh(this->window);			/* Show that box 		*/
-
-
-	// this->window = newwin(height, width, 0, 0);
-
-	// box(this->window, 0 , 0);		 0, 0 gives default characters 
-	// 							 * for the vertical and horizontal
-	// 				 			* lines			
-	// wrefresh(this->window);		/* Show that box 		*/
-
+	this->window = newwin(width, height, starty, startx);
+	keypad(this->window , TRUE);
+	nodelay(this->window, TRUE);
+	noecho();
+	curs_set(TRUE);
+  	wrefresh(this->window);
 }
 
 void NcursesLib::clearScreen(){
-
+	clear();
 }
 
 void NcursesLib::displayScreen(){
-
+	refresh();
 }
 
 E_EVENT NcursesLib::handleEvents(){
 
+	int c = wgetch(this->window);
+	switch(c)
+	{	case KEY_UP:
+			addch('^');
+			break;
+		case KEY_DOWN:
+			addch('_');
+			break;
+		case 32:
+			std::cout << "Space key pressed" << std::endl;
+			endwin();
+			exit(1);
+			break;
+		default:
+			break;
+	}
 };
 
+void NcursesLib::cleanUp(){
+	delwin(this->window);
+	endwin();
+}
 
 
 NcursesLib *createLib(){
@@ -147,6 +123,7 @@ NcursesLib *createLib(){
 }
 
 void deleteLib(NcursesLib *lib){
+	lib->cleanUp();
 	delete lib;
 }
 

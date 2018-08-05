@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 
 		// Use SFML by default
 		game.setWindow(std::stoi(argv[1]), std::stoi(argv[2]));
-		game.init(E_LIBRARY_CHOICE::SDL);
+		game.init(E_LIBRARY_CHOICE::NCURSES);
 		game.runLoop();
 	}
 

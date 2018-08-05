@@ -40,6 +40,10 @@ class NcursesLib : public LibInterface{
 		int getWindowX(void) const;
 		int getWindowY(void) const;
 
+	/*
+		ADDITIONAL FUNCTIONS
+	*/
+		void cleanUp(void);
 };
 
 
