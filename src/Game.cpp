@@ -69,7 +69,9 @@ void Game::handleEvents()
 	else if (event == E_EVENT::EVENT_KEYBOARD_2){
 		useLibrary(E_LIBRARY_CHOICE::SDL);
 	}
-
+	else if (event == E_EVENT::EVENT_KEYBOARD_3){
+		useLibrary(E_LIBRARY_CHOICE::NCURSES);
+	}
 	for (auto i : m_entityList)
 	{
 		i->handleEvent(event);
@@ -129,7 +131,7 @@ void Game::init(E_LIBRARY_CHOICE libChoice)
 
 
 	SnakeHead *snake = new SnakeHead();
-	snake->init(window_x/2,window_y/2,10,10,E_COLOR::COLOR_YELLOW,E_DIRECTION::RIGHT, this);
+	snake->init( window_x/2, window_y/2, 10, 10, E_COLOR::COLOR_YELLOW, E_DIRECTION::RIGHT, this);
 	addEntity(snake);
 
 	Food *food = new Food();
@@ -140,6 +142,7 @@ void Game::init(E_LIBRARY_CHOICE libChoice)
 void	Game::closeGame()
 {
 	m_shouldRun = false;
+	this->_library->cleanUp();
 	useLibrary(E_LIBRARY_CHOICE::NONE);
 }
 

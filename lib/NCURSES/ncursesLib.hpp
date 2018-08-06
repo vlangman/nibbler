@@ -27,7 +27,6 @@ class NcursesLib : public LibInterface{
 	/* 
 		VIRTUAL INHERITED ABSTRACT FUCNTIONS
 	*/
-		void drawGame(std::vector<Drawable *> &drawList);
 		void draw(int x, int y, int width, int height, E_COLOR color);
 		void init(int width, int height);
 		void clearScreen();

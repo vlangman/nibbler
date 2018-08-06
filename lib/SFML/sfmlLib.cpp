@@ -126,6 +126,6 @@ void sfmlLib::displayScreen()
 	window->display();
 }
 
-void sfmlLib::drawGame(std::vector<Drawable *> &drawList){
-	
+void sfmlLib::cleanUp(){
+	return;
 }

@@ -22,6 +22,7 @@ NcursesLib::NcursesLib(void){
 }
 
 NcursesLib::~NcursesLib(void){
+	cleanUp();
 	return;
 }
 
@@ -55,49 +56,66 @@ NcursesLib & NcursesLib::operator=(const NcursesLib & _lib){
 */
 
 
-void NcursesLib::drawGame(std::vector<Drawable *> &drawList){
-	return;
-}
-
-
 void NcursesLib::drawBorder(){
 	int x = getWindowX();
 	int y = getWindowY();
 
+	attron (COLOR_PAIR (1));
+    // mvwprintw (testwin, 0, 0, "%s", "Hello");
+   
 	for(int i = 0; i < x; i++){
 		move(0, i);
-		addch('-');
+		addch('=');
 	}
 	for(int i = 0; i < y; i++){
 		move(i, x);
-		addch('|');
+		addch(']');
 	}
 	for(int i = 0; i < y; i++){
 		move(i, 0);
-		addch('|');
+		addch('[');
 	}
 	for(int i = 0; i < x; i++){
 		move(y, i);
-		addch('-');
+		addch('=');
 	}
+	attroff (COLOR_PAIR (1));
 }
 
 void NcursesLib::draw(int x, int y, int width, int height, E_COLOR color){
-	drawBorder();
-	refresh();
-	move(y/10, x/10);
-	refresh();
-	addch('#');
 
+	drawBorder();
+	move((y/10)+1, (x/10)+1);
+	switch (color)
+	{
+		case (0): 
+			attron(3);
+			addch('#');
+			attroff(3);
+			break;
+		case (1):
+			attron (COLOR_PAIR (1));
+			addch('0');
+			attroff (COLOR_PAIR (1));
+			break;
+	}
+	refresh();
 }
 
 void NcursesLib::init(int width, int height){
 
 	initscr();
-	int lines = height / 10;
-	int columns = width / 10;
-
-	if (lines > 55 || columns > 150 || lines < 0 || columns < 0)
+	int lines = (height/10) + 1;
+	int columns = (width/10) + 1;
+	if (width % 10 != 0 || height % 10 != 0){
+		move(LINES/2, COLS/2 - 30);
+  		addstr("ERROR: height and width must be multiples of 10");
+  		refresh();
+		getch();
+		cleanUp();
+		exit(1);
+	}
+	if (lines > 56 || columns > 151 || lines < 0 || columns < 0)
 	{
 		while(1)
 	  	{
@@ -114,7 +132,7 @@ void NcursesLib::init(int width, int height){
 
 	
 	cbreak();
-	this->window = newwin(lines, columns, 0, 0);
+	this->window = newwin(lines, columns, 1, 1);
 	while(1){
 		if (columns <= COLS && lines <= LINES){
 			break;
@@ -145,7 +163,7 @@ void NcursesLib::init(int width, int height){
 	keypad(this->window , TRUE);
 	nodelay(this->window, TRUE);
 	noecho();
-	curs_set(TRUE);
+	curs_set(FALSE);
 	refresh();
 }
 
@@ -176,6 +194,12 @@ E_EVENT NcursesLib::handleEvents(){
 		case KEY_CLOSE:
 			return E_EVENT::EVENT_CLOSE_WINDOW;
 			break;
+		case 49:
+			return E_EVENT::EVENT_KEYBOARD_1;
+			break;
+		case 50:
+			return E_EVENT::EVENT_KEYBOARD_2;
+			break;
 		default:
 			return E_EVENT::EVENT_NONE;
 			break;
@@ -183,6 +207,7 @@ E_EVENT NcursesLib::handleEvents(){
 };
 
 void NcursesLib::cleanUp(){
+	std::cout << "CLEANUP CALLED" << std::endl;
 	delwin(this->window);
 	endwin();
 }
@@ -193,7 +218,6 @@ NcursesLib *createLib(){
 }
 
 void deleteLib(NcursesLib *lib){
-	lib->cleanUp();
 	delete lib;
 }
 
