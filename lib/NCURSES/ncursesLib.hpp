@@ -44,6 +44,7 @@ class NcursesLib : public LibInterface{
 		ADDITIONAL FUNCTIONS
 	*/
 		void cleanUp(void);
+		void drawBorder(void);
 };
 
 

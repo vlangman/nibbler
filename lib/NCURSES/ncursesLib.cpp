@@ -59,20 +59,45 @@ void NcursesLib::drawGame(std::vector<Drawable *> &drawList){
 	return;
 }
 
+
+void NcursesLib::drawBorder(){
+	int x = getWindowX();
+	int y = getWindowY();
+
+	for(int i = 0; i < x; i++){
+		move(0, i);
+		addch('-');
+	}
+	for(int i = 0; i < y; i++){
+		move(i, x);
+		addch('|');
+	}
+	for(int i = 0; i < y; i++){
+		move(i, 0);
+		addch('|');
+	}
+	for(int i = 0; i < x; i++){
+		move(y, i);
+		addch('-');
+	}
+}
+
 void NcursesLib::draw(int x, int y, int width, int height, E_COLOR color){
-	border('|', '|', '-',  '-', '+', '+', '+', '+');
+	drawBorder();
+	refresh();
 	move(y/10, x/10);
 	refresh();
-	addch('0');
+	addch('#');
+
 }
 
 void NcursesLib::init(int width, int height){
 
 	initscr();
 	int lines = height / 10;
-	int colums = width / 10;
+	int columns = width / 10;
 
-	if (lines > 55 || colums > 150 || lines < 0 || colums < 0)
+	if (lines > 55 || columns > 150 || lines < 0 || columns < 0)
 	{
 		while(1)
 	  	{
@@ -89,12 +114,12 @@ void NcursesLib::init(int width, int height){
 
 	
 	cbreak();
-	this->window = newwin(lines, colums, 0, 0);
+	this->window = newwin(lines, columns, 0, 0);
 	while(1){
-		if (colums <= COLS && lines <= LINES){
+		if (columns <= COLS && lines <= LINES){
 			break;
 		}
-		else if (colums > COLS || lines > LINES){
+		else if (columns > COLS || lines > LINES){
 			move(LINES/2, COLS/2 - 30);
 	  		refresh();
 	  		addstr("Error: Please resize screen then press any key");
@@ -103,8 +128,20 @@ void NcursesLib::init(int width, int height){
 		}
 		
 	}
+
+	if(has_colors() == FALSE)
+	{	cleanUp();
+		printf("Your terminal does not support color\n");
+		exit(1);
+	}
+	start_color();
+	init_pair(1, COLOR_RED, COLOR_BLACK);
+
+	wresize(this->window, lines, columns);
+	this->window_x = columns;
+	this->window_y = lines;
 	
-	
+
 	keypad(this->window , TRUE);
 	nodelay(this->window, TRUE);
 	noecho();
