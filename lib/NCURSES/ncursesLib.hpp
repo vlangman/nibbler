@@ -1,6 +1,6 @@
 #pragma once
 #include "LibInterface.hpp"
-#include <curses.h>
+#include <ncurses.h>
 
 
 class NcursesLib : public LibInterface{

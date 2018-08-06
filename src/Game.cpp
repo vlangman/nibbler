@@ -128,9 +128,9 @@ void Game::init(E_LIBRARY_CHOICE libChoice)
 	useLibrary(libChoice);
 
 
-	// SnakeHead *snake = new SnakeHead();
-	// snake->init(window_x/2,window_y/2,10,10,E_COLOR::COLOR_YELLOW,E_DIRECTION::RIGHT, this);
-	// addEntity(snake);
+	SnakeHead *snake = new SnakeHead();
+	snake->init(window_x/2,window_y/2,10,10,E_COLOR::COLOR_YELLOW,E_DIRECTION::RIGHT, this);
+	addEntity(snake);
 
 	Food *food = new Food();
 	food->init(window_x/2+10,window_y/2, 10,10, E_COLOR::COLOR_RED, this);
@@ -165,24 +165,24 @@ void	Game::useLibrary(E_LIBRARY_CHOICE libChoice)
 			deleteLibrary(_library);
 		}
 
-		// if (libChoice == E_LIBRARY_CHOICE::SDL)
-		// 	libString = "libsdlLib.dylib";
-		// else if (libChoice == E_LIBRARY_CHOICE::SFML)
-		// 	libString = "libsfmlLib.dylib";
-		// else if (libChoice == E_LIBRARY_CHOICE::NCURSES)
-		// 	libString = "libncursesLib.dylib";
-		// else if (libChoice == E_LIBRARY_CHOICE::NONE)
-		// 	return;
-
-
 		if (libChoice == E_LIBRARY_CHOICE::SDL)
-			libString = "libsdlLib.so";
+			libString = "libsdlLib.dylib";
 		else if (libChoice == E_LIBRARY_CHOICE::SFML)
-			libString = "libsfmlLib.so";
+			libString = "libsfmlLib.dylib";
 		else if (libChoice == E_LIBRARY_CHOICE::NCURSES)
-			libString = "libncursesLib.so";
+			libString = "libncursesLib.dylib";
 		else if (libChoice == E_LIBRARY_CHOICE::NONE)
 			return;
+
+
+		// if (libChoice == E_LIBRARY_CHOICE::SDL)
+		// 	libString = "libsdlLib.so";
+		// else if (libChoice == E_LIBRARY_CHOICE::SFML)
+		// 	libString = "libsfmlLib.so";
+		// else if (libChoice == E_LIBRARY_CHOICE::NCURSES)
+		// 	libString = "libncursesLib.so";
+		// else if (libChoice == E_LIBRARY_CHOICE::NONE)
+		// 	return;
 		
 		_libHandle = dlopen(libString.c_str(), RTLD_LOCAL | RTLD_LAZY);
 		if (!_libHandle){

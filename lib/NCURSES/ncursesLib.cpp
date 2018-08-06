@@ -61,27 +61,55 @@ void NcursesLib::drawGame(std::vector<Drawable *> &drawList){
 
 void NcursesLib::draw(int x, int y, int width, int height, E_COLOR color){
 	border('|', '|', '-',  '-', '+', '+', '+', '+');
-	move(y, x);
-	wmove(this->window,  y,  x);
-
-	getch();
+	move(y/10, x/10);
 	refresh();
 	addch('0');
 }
 
 void NcursesLib::init(int width, int height){
 
-	int starty = (LINES - height) / 2;	/* Calculating for a center placement */
-	int startx = (COLS - width) / 2;	/* of the window		*/
-
 	initscr();
+	int lines = height / 10;
+	int colums = width / 10;
+
+	if (lines > 55 || colums > 150 || lines < 0 || colums < 0)
+	{
+		while(1)
+	  	{
+	  		move(LINES/2, COLS/2 - 30);
+	  		refresh();
+	  		addstr("ERROR: Max res 1500 x 550 ... press any key to exit");
+	  		refresh();
+	  		getch();
+	  		cleanUp();
+	  		break;
+	  	}
+		exit(1);
+	}
+
+	
 	cbreak();
-	this->window = newwin(width, height, starty, startx);
+	this->window = newwin(lines, colums, 0, 0);
+	while(1){
+		if (colums <= COLS && lines <= LINES){
+			break;
+		}
+		else if (colums > COLS || lines > LINES){
+			move(LINES/2, COLS/2 - 30);
+	  		refresh();
+	  		addstr("Error: Please resize screen then press any key");
+			refresh();
+			getch();
+		}
+		
+	}
+	
+	
 	keypad(this->window , TRUE);
 	nodelay(this->window, TRUE);
 	noecho();
 	curs_set(TRUE);
-  	wrefresh(this->window);
+	refresh();
 }
 
 void NcursesLib::clearScreen(){
@@ -97,17 +125,22 @@ E_EVENT NcursesLib::handleEvents(){
 	int c = wgetch(this->window);
 	switch(c)
 	{	case KEY_UP:
-			addch('^');
+			return E_EVENT::EVENT_KEYBOARD_UP;
 			break;
 		case KEY_DOWN:
-			addch('_');
+			return E_EVENT::EVENT_KEYBOARD_DOWN;
 			break;
-		case 32:
-			std::cout << "Space key pressed" << std::endl;
-			endwin();
-			exit(1);
+		case KEY_LEFT:
+			return E_EVENT::EVENT_KEYBOARD_LEFT;
+			break;
+		case KEY_RIGHT:
+			return E_EVENT::EVENT_KEYBOARD_RIGHT;
+			break;
+		case KEY_CLOSE:
+			return E_EVENT::EVENT_CLOSE_WINDOW;
 			break;
 		default:
+			return E_EVENT::EVENT_NONE;
 			break;
 	}
 };

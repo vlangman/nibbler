@@ -14,7 +14,7 @@ void SnakeHead::handleEvent(E_EVENT event)
         if (mDirection != E_DIRECTION::DOWN)
             mDirection = E_DIRECTION::UP;
     }
-    else if (event == E_EVENT::EVENT_KEYBAORD_DOWN){
+    else if (event == E_EVENT::EVENT_KEYBOARD_DOWN){
         if (mDirection != E_DIRECTION::UP)
             mDirection = E_DIRECTION::DOWN;
     }

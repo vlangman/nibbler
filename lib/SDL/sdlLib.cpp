@@ -81,7 +81,7 @@ E_EVENT SdlLib::handleEvents()
 			switch( event.key.keysym.sym )
 			{
 				case SDLK_UP: return E_EVENT::EVENT_KEYBOARD_UP;
-				case SDLK_DOWN:return E_EVENT::EVENT_KEYBAORD_DOWN;
+				case SDLK_DOWN:return E_EVENT::EVENT_KEYBOARD_DOWN;
 				case SDLK_LEFT:return E_EVENT::EVENT_KEYBOARD_LEFT;
 				case SDLK_RIGHT:return E_EVENT::EVENT_KEYBOARD_RIGHT;
 				case SDLK_1: return E_EVENT::EVENT_KEYBOARD_1;

@@ -92,7 +92,7 @@ E_EVENT sfmlLib::handleEvents()
 			else if (event.key.code == sf::Keyboard::Up)
 				return E_EVENT::EVENT_KEYBOARD_UP;
 			else if (event.key.code == sf::Keyboard::Down)
-				return E_EVENT::EVENT_KEYBAORD_DOWN;
+				return E_EVENT::EVENT_KEYBOARD_DOWN;
 			else if (event.key.code == sf::Keyboard::Num1)
 				return E_EVENT::EVENT_KEYBOARD_1;
 			else if (event.key.code == sf::Keyboard::Num2)
