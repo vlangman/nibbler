@@ -2,6 +2,25 @@
 #include "Game.hpp"
 #include <iostream>
 
+Snake::Snake()
+{
+    m_type = E_ENTITY_TYPE::ENTITY_SNAKE;
+    return;
+}
+
+
+Snake::~Snake(void){
+    return;
+};
+Snake & Snake::operator=(const Snake & _rhs){
+    static_cast<void>(_rhs);
+};
+Snake::Snake(const Snake & _snake){
+    static_cast<void>(_snake);
+    return;
+};
+
+
 void Snake::init(int x, int y, int width, int height, E_COLOR color, E_DIRECTION startDirection, Game *world)
 {
     m_child = NULL;
@@ -13,11 +32,6 @@ void Snake::init(int x, int y, int width, int height, E_COLOR color, E_DIRECTION
 Snake *Snake::getChild()
 {
     return m_child;
-}
-
-Snake::Snake()
-{
-    m_type = E_ENTITY_TYPE::ENTITY_SNAKE;
 }
 
 void Snake::setChild(Snake *child){

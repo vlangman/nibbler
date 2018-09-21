@@ -22,7 +22,10 @@ public:
     virtual void update();
     virtual void handleEvent(E_EVENT event);
 
-    Snake();
+    Snake(void);
+    ~Snake(void);
+    Snake & operator=(const Snake & _rhs);
+    Snake(const Snake & _snake);
 
     int getSpeed();
     void changeDirection(E_DIRECTION dir);

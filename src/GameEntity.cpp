@@ -1,15 +1,29 @@
 #include "GameEntity.hpp"
 
-E_ENTITY_TYPE GameEntity::getType()
-{
-    return m_type;
-}
-
+   //canon start
+	
 GameEntity::GameEntity()
 {
     m_type = ENTITY_NONE;
     m_alive = true;
 }
+
+GameEntity::GameEntity(const GameEntity & _entity){
+	static_cast<void>(_entity);
+	return;
+};
+
+GameEntity & GameEntity::operator=(const GameEntity & _rhs){
+	static_cast<void>(_rhs);
+	return *this;
+}
+//cannon end
+
+E_ENTITY_TYPE GameEntity::getType()
+{
+    return m_type;
+}
+
 
 void GameEntity::init(int x, int y, int width, int height, E_COLOR color, Game *world)
 {

@@ -1,54 +1,69 @@
 #include "Drawable.hpp"
 
-void Drawable::init(int x, int y, int width, int height, E_COLOR color)
-{
-    this->m_x = x;
-    this->m_y = y;
-    this->m_width = width;
-    this->m_height = height;
-    this->m_color = color;
-    mShouldUpdate = true;
+Drawable::Drawable(void){
+	return;
+};
+
+Drawable::~Drawable(void){
+	return;
+};
+
+Drawable::Drawable(const Drawable & _drawable){
+	static_cast<void>(_drawable);
+	return;
+};
+
+Drawable & Drawable::operator=(const Drawable & _rhs){
+	static_cast<void>(_rhs);
+	return *this;
 }
 
-Drawable::Drawable()
+void Drawable::init(int x, int y, int width, int height, E_COLOR color)
 {
+	this->m_x = x;
+	this->m_y = y;
+	this->m_width = width;
+	this->m_height = height;
+	this->m_color = color;
+	mShouldUpdate = true;
 }
+
 
 void Drawable::setPosition(int x, int y)
 {
-    m_x = x;
-    m_y = y;
+	m_x = x;
+	m_y = y;
 }
 
 int Drawable::getX()
 {
-    return this->m_x;
+	return this->m_x;
 }
 int Drawable::getY()
 {
-    return this->m_y;
+	return this->m_y;
 }
 int Drawable::getWidth()
 {
-    return this->m_width;
+	return this->m_width;
 }
 
 int Drawable::getHeight()
 {
-    return m_height;
+	return m_height;
 }
 E_COLOR Drawable::getColor()
 {
-    return m_color;
+	return m_color;
 }
 
 bool Drawable::isUpdateable(){
-    return mShouldUpdate;
+	return mShouldUpdate;
 }
 
 void Drawable::doNotUpdate()
 {
-    mShouldUpdate = false;
+	mShouldUpdate = false;
 }
 
 void Drawable::update()

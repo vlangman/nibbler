@@ -12,6 +12,14 @@ protected:
 
     bool mShouldUpdate;
 public:
+//conon start
+
+    Drawable(void);
+    ~Drawable(void);
+    Drawable(const Drawable & _drawable);
+    Drawable & operator=(const Drawable & _drawable);
+    //canon end
+
     int getX();
     int getY();
     int getWidth();
@@ -19,8 +27,6 @@ public:
     E_COLOR getColor();
 
     void setPosition(int x, int y);
-
-    Drawable();
     virtual void init(int x, int y, int width, int height, E_COLOR color);
     virtual void update();
     virtual void handleEvent(E_EVENT event);
