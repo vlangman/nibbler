@@ -81,18 +81,18 @@ void Game::handleEvents()
 
 int 	Game::runLoop(void) 
 {
-	_library->clearScreen();
+	// _library->clearScreen();
 
-	usleep(60000);
+	// usleep(60000);
 
-	for (auto i : m_entityList)
-	{
-		i->update();
-		_library->draw(i->getX(),i->getY(),i->getWidth(),i->getHeight(), i->getColor());
-	}
-	_library->displayScreen();
-		cleanup();
-	sleep(3);
+	// for (auto i : m_entityList)
+	// {
+	// 	i->update();
+	// 	_library->draw(i->getX(),i->getY(),i->getWidth(),i->getHeight(), i->getColor());
+	// }
+	// _library->displayScreen();
+	// 	cleanup();
+	// sleep(3);
 
 	while (m_shouldRun)
 	{
@@ -100,7 +100,7 @@ int 	Game::runLoop(void)
 		_library->clearScreen();
 
 		usleep(60000);
-
+		usleep(60000);
 		for (auto i : m_entityList)
 		{
 			i->update();
@@ -156,7 +156,16 @@ void	Game::closeGame()
 {
 	m_shouldRun = false;
 	this->_library->cleanUp();
-	useLibrary(E_LIBRARY_CHOICE::NONE);
+
+
+	if (m_curLib == E_LIBRARY_CHOICE::SFML)
+	{
+		useLibrary(E_LIBRARY_CHOICE::SDL);
+	}
+	else{ 
+		useLibrary(E_LIBRARY_CHOICE::NONE);
+	}
+
 }
 
 void	Game::addEntity(GameEntity *entity)
@@ -188,7 +197,9 @@ void	Game::useLibrary(E_LIBRARY_CHOICE libChoice)
 		else if (libChoice == E_LIBRARY_CHOICE::NCURSES)
 			libString = "libncursesLib.dylib";
 		else if (libChoice == E_LIBRARY_CHOICE::NONE)
+		{
 			return;
+		}
 
 
 		// if (libChoice == E_LIBRARY_CHOICE::SDL)

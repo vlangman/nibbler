@@ -64,7 +64,9 @@ SdlLib *createLib(){
 }
 
 void deleteLib(SdlLib *lib){
+	std::cout << "RIP" << std::endl;
 	delete lib;
+	std::cout << "RIP - END" << std::endl;
 }
 
 E_EVENT SdlLib::handleEvents()
