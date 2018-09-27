@@ -81,6 +81,19 @@ void Game::handleEvents()
 
 int 	Game::runLoop(void) 
 {
+	_library->clearScreen();
+
+	usleep(60000);
+
+	for (auto i : m_entityList)
+	{
+		i->update();
+		_library->draw(i->getX(),i->getY(),i->getWidth(),i->getHeight(), i->getColor());
+	}
+	_library->displayScreen();
+		cleanup();
+	sleep(3);
+
 	while (m_shouldRun)
 	{
 		handleEvents();
